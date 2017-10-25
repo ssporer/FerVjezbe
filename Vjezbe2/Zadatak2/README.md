@@ -1,4 +1,5 @@
 # Zadatak 2
+
 Main klasa u ulozi `HttpServlet`, registrirana kroz *web.xml*
 
 *pom.xml* je definiran da se pakira kao war sa `<packaging>war</packaging>`.

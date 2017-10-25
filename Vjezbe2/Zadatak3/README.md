@@ -1,4 +1,5 @@
-#Zadatak 3
+# Zadatak 3
+
 Multimodularan projekt gdje je *Zadatak3* parent a *Zadatak3Child1* i *Zadatak3Child2* childovi projekta
 
 To je definirano u parent *pom.xml* sa
