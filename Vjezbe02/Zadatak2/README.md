@@ -17,4 +17,3 @@ Sadrži osnovne definicije verzije Java SDK za kompajliranje i encoding datoteka
 Što je preporučljivo (ali ne nužno) za svaki *pom.xml*
 
 Ostali dependency-i su za jetty servlet tako da bi server mogao ispisati željeni tekst na ekran
- 
