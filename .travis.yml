@@ -1,6 +1,6 @@
 language: java
 env:
-  - BUILD_DIR=Vjezbe2/Zadatak1
-  - BUILD_DIR=Vjezbe2/Zadatak2
-  - BUILD_DIR=Vjezbe2/Zadatak3
+  - BUILD_DIR=Vjezbe02/Zadatak1
+  - BUILD_DIR=Vjezbe02/Zadatak2
+  - BUILD_DIR=Vjezbe02/Zadatak3
 script: cd $BUILD_DIR && mvn test
