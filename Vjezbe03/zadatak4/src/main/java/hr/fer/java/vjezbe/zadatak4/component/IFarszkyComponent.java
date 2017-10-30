@@ -1,5 +1,6 @@
 package hr.fer.java.vjezbe.zadatak4.component;
 
+import hr.fer.java.vjezbe.zadatak4.model.enums.Students;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,7 +11,7 @@ public class IFarszkyComponent extends CoreComponent {
 
 
     @Override
-    public String setStudentName() {
-        return "igor farszky";
+    protected String setStudentName() {
+        return Students.IFARSZKY.toString();
     }
 }

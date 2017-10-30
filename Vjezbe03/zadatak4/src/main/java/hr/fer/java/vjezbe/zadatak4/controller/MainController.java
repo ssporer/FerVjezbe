@@ -12,9 +12,6 @@ import java.util.List;
 
 @RestController("/") public class MainController {
 
-    @Autowired
-    private IFarszkyComponent iFarszkyComponent;
-
     @GetMapping({"/", "/registered"}) public String displayRegistered() {
         return display(RegisteredStudents.getRegistered());
     }
