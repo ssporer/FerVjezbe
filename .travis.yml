@@ -1,3 +1,6 @@
+branches:
+  only:
+  - master
 language: java
 env:
   - BUILD_DIR=Vjezbe02/Zadatak1
