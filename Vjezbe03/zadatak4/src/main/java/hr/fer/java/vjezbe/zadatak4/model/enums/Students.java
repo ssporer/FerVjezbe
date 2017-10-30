@@ -8,7 +8,8 @@ public enum Students {
 
     PERE_MIKULIC,
     IFARSZKY,
-    MISLAV;
+    MISLAV,
+    ZELBAR;
 
     public static List<String> toList() {
         return Arrays.stream(Students.values()).map(student -> student.toString()).collect(Collectors.toList());
