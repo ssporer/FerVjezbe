@@ -50,3 +50,4 @@ Dependency se onda ubacuje u ostale child module **bez verzije**
 
 Projekt se deploy-a sa Vjezba3Child2 projektom na tomcat i prikazuje poruku iz *Child2Main* i *Child1Main* u rootu na adresi [http://localhost:8080](http://localhost:8080)
 
+Test
