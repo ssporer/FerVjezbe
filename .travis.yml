@@ -3,4 +3,5 @@ env:
   - BUILD_DIR=Vjezbe02/Zadatak1
   - BUILD_DIR=Vjezbe02/Zadatak2
   - BUILD_DIR=Vjezbe02/Zadatak3
+  - BUILD_DIR=Vjezbe03/zadatak4
 script: cd $BUILD_DIR && mvn test
