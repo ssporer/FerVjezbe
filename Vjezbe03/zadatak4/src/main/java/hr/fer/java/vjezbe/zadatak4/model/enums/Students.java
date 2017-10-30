@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public enum Students {
 
-    ;
+    IFARSZKY;
 
     public static List<String> toList() {
         return Arrays.stream(Students.values()).map(student -> student.toString()).collect(Collectors.toList());
