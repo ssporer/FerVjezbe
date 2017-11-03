@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="Zadatak2:war">
-    <output-path>$PROJECT_DIR$/Zadatak2/target</output-path>
-    <root id="archive" name="Zadatak2-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="Zadatak2:war exploded" />
-    </root>
-  </artifact>
-</component>
