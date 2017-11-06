@@ -1,6 +1,7 @@
 package hr.fer.java.vjezbe.zadatak4.component;
 
 import hr.fer.java.vjezbe.zadatak4.model.RegisteredStudents;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
