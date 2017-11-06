@@ -1,5 +1,6 @@
 package hr.fer.java.demo;
 
+import hr.fer.java.demo.component.AsyncTask;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +11,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class HelloWorldApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	public void asyncTest() {
+		AsyncTask task = new AsyncTask();
+		for (int i = 0; i < 8; i++) {
+			try {
+				task.write();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
