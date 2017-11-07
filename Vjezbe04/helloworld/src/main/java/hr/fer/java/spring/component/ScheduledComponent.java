@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
  * Created by Mislav on 6.11.2017..
  */
 @Component
-public class ScheduledTask {
-    private static final Logger logger = LoggerFactory.getLogger(ScheduledTask.class);
+public class ScheduledComponent {
+    private static final Logger logger = LoggerFactory.getLogger(ScheduledComponent.class);
 
     @Scheduled(fixedRate = 2000)
     public void sayHello(){
