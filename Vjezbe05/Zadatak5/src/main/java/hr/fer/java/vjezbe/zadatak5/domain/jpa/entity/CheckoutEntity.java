@@ -8,7 +8,9 @@ import java.sql.Timestamp;
     private Timestamp checkoutTime;
     private Timestamp checkinTime;
     private String user;
+    private PersonEntity personByPersonId;
     private BookEntity bookByBookId;
+    private LibrarianEntity librarianByLibrarianId;
 
     @Id @Column(name = "ID") public Integer getId() {
         return id;
@@ -77,5 +79,23 @@ import java.sql.Timestamp;
 
     public void setBookByBookId(BookEntity bookByBookId) {
         this.bookByBookId = bookByBookId;
+    }
+
+    @ManyToOne @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID", nullable = false)
+    public PersonEntity getPersonByPersonId() {
+        return personByPersonId;
+    }
+
+    public void setPersonByPersonId(PersonEntity personByPersonId) {
+        this.personByPersonId = personByPersonId;
+    }
+
+    @ManyToOne @JoinColumn(name = "LIBRARIAN_ID", referencedColumnName = "ID", nullable = false)
+    public LibrarianEntity getLibrarianByLibrarianId() {
+        return librarianByLibrarianId;
+    }
+
+    public void setLibrarianByLibrarianId(LibrarianEntity librarianByLibrarianId) {
+        this.librarianByLibrarianId = librarianByLibrarianId;
     }
 }
