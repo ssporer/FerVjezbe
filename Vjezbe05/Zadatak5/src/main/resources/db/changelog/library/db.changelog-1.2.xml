@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="1.2.0" author="Voste">
+        <insert schemaName="LIBRARY" tableName="CHECKOUT">
+            <column name="PERSON_ID">1</column>
+            <column name="BOOK_ID">1</column>
+            <column name="LIBRARIAN_ID">1</column>
+            <column name="CHECKOUT_TIME">2017-11-13 15:00:00</column>
+            <column name="USER">Voste</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
