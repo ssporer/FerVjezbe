@@ -55,8 +55,8 @@ public class BookDto {
 
     @Override public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getAuthor());
-        sb.append(": ");
+        sb.append(authorFirstName).append(" ");
+        sb.append(authorLastName).append(": ");
         sb.append(title);
         return sb.toString();
     }
