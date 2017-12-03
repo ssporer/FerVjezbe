@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot Thymeleaf Hello World Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+
+<form th:action="@{/checkout}" th:object="${checkoutDto}" method="post">
+    <table>
+        <tr>
+            <td><label>Knjiga: </label></td>
+            <td>
+                <select th:field="${checkoutDto.bookTitle}" title="Knjiga">
+                    <option th:each="title : ${titles}" th:value="${title}" th:text="${title}"></option>
+                </select>
+            </td>
+            <td th:if="${#fields.hasErrors('bookTitle')}" th:errors="*{bookTitle}">Knjiga Error</td>
+        </tr>
+        <tr>
+            <td><label>Član: </label></td>
+            <td>
+                <select th:field="${checkoutDto.memberId}" title="Član">
+                    <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.fullName}"></option>
+                </select>
+            </td>
+            <td th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}">Član error</td>
+        </tr>
+        <tr>
+            <td><label>Knjižničar: </label></td>
+            <td>
+                <select th:field="${checkoutDto.librarianUsername}" title="Knjižničar">
+                    <option th:each="librarian : ${librarians}" th:value="${librarian.username}"
+                            th:text="${librarian.fullName}"></option>
+                </select>
+            </td>
+            <td th:if="${#fields.hasErrors('librarianUsername')}" th:errors="*{librarianUsername}">Knjižničar error</td>
+        </tr>
+    </table>
+    <input type="submit" value="Checkout"/>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <table border="1">
+        <tr>
+            <th>Član</th>
+            <th>Knjiga</th>
+            <th>Autor</th>
+            <th>Knjiznicar</th>
+            <th>Posuđeno</th>
+            <th>Vračeno</th>
+        </tr>
+        <tr th:each="checkout : ${checkouts}">
+            <td><label th:text="${checkout.memberName}"/></td>
+            <td><label th:text="${checkout.bookTitle}"/></td>
+            <td><label th:text="${checkout.authorName}"/></td>
+            <td><label th:text="${checkout.librarianName}"/></td>
+            <td><label th:text="${checkout.checkoutFormatted}"/></td>
+            <td><label th:text="${checkout.checkInFormatted}"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
