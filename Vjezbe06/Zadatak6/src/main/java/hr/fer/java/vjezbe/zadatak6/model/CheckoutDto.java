@@ -16,7 +16,7 @@ public class CheckoutDto {
 
     private String memberName;
 
-    @NotNull @Size(min = 2) private String bookTitle;
+    @NotNull(message = "Odaberite knjigu!") @Size(min = 2) private String bookTitle;
 
     private Integer bookId;
 

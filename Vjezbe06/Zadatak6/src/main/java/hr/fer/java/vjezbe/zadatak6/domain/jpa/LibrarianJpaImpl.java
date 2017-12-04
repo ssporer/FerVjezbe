@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Repository
-@Transactional
-public class LibrarianJpaImpl implements LibrarianDao {
+@Repository @Transactional public class LibrarianJpaImpl implements LibrarianDao {
 
     private final LibrarianRepository repository;
 
@@ -22,8 +20,7 @@ public class LibrarianJpaImpl implements LibrarianDao {
     }
 
     @Override public List<LibrarianDto> findAll() {
-        return repository.findAll().stream().map(librarianEntity -> new LibrarianDto(librarianEntity))
-                .collect(Collectors.toList());
+        return repository.findAll().stream().map(LibrarianDto::new).collect(Collectors.toList());
     }
 
     @Override public LibrarianDto findByUsername(String username) {

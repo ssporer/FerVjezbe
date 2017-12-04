@@ -23,8 +23,7 @@ import java.util.stream.Collectors;
     }
 
     @Override public List<BookDto> getAllBooks() {
-        return repository.findAll().stream().map(bookEntity -> new BookDto(bookEntity))
-                .collect(Collectors.toList());
+        return repository.findAll().stream().map(BookDto::new).collect(Collectors.toList());
     }
 
     @Override public List<String> getAvailableTitles() {

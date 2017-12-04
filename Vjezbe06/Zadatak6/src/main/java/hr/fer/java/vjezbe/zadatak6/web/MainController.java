@@ -9,16 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.validation.Valid;
 import java.util.Map;
 
-@Controller public class MainController extends WebMvcConfigurerAdapter {
+@Controller public class MainController {
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
@@ -39,15 +37,16 @@ import java.util.Map;
         this.checkoutService = checkoutService;
     }
 
-    @RequestMapping({"/", "/checkout"}) public String welcome(Map<String, Object> model) {
+    @GetMapping({"/", "/checkout"}) public String welcome(Map<String, Object> model) {
         model.put("checkoutDto", new CheckoutDto());
         fillModel(model);
         return "welcome";
     }
 
-    @PostMapping("/checkout") public String checkout(Map<String, Object> model, @ModelAttribute @Valid CheckoutDto dto,
-            BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+    @PostMapping("/checkout") public String checkout(Map<String, Object> model, @Valid CheckoutDto dto,
+            Errors errors) {
+
+        if (errors.hasFieldErrors()) {
             fillModel(model);
             return "welcome";
         }
