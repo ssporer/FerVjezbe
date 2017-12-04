@@ -37,37 +37,47 @@
                             th:text="${librarian.fullName}"></option>
                 </select>
             </td>
-            <td style="color: red" th:if="${#fields.hasErrors('librarianUsername')}" th:errors="*{librarianUsername}">Knjižničar error</td>
+            <td style="color: red" th:if="${#fields.hasErrors('librarianUsername')}" th:errors="*{librarianUsername}">
+                Knjižničar error
+            </td>
         </tr>
     </table>
     <input type="submit" value="Checkout"/>
-
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-
-    <th:block th:if="${!checkouts.isEmpty()}">
-        <table border="1">
-            <tr>
-                <th>Član</th>
-                <th>Knjiga</th>
-                <th>Autor</th>
-                <th>Knjiznicar</th>
-                <th>Posuđeno</th>
-                <th>Vračeno</th>
-            </tr>
-            <tr th:each="checkout : ${checkouts}">
-                <td><label th:text="${checkout.memberName}"></label></td>
-                <td><label th:text="${checkout.bookTitle}"></label></td>
-                <td><label th:text="${checkout.authorName}"></label></td>
-                <td><label th:text="${checkout.librarianName}"></label></td>
-                <td><label th:text="${checkout.checkoutFormatted}"></label></td>
-                <td><label th:text="${checkout.checkInFormatted}"></label></td>
-            </tr>
-        </table>
-    </th:block>
-
 </form>
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<th:block th:if="${!checkouts.isEmpty()}">
+    <table border="1">
+        <tr>
+            <th>Član</th>
+            <th>Knjiga</th>
+            <th>Autor</th>
+            <th>Knjiznicar</th>
+            <th>Posuđeno</th>
+            <th>Vračeno</th>
+        </tr>
+        <tr th:object="${checkout}" th:each="checkout : ${checkouts}">
+            <td><label th:text="*{memberName}"></label></td>
+            <td><label th:text="*{bookTitle}"></label></td>
+            <td><label th:text="*{authorName}"></label></td>
+            <td><label th:text="*{librarianName}"></label></td>
+            <td><label th:text="*{checkoutFormatted}"></label></td>
+            <td><label th:text="*{checkInFormatted}"></label>
+                <form th:action="@{/checkIn}" th:object="${checkoutDto}" method="post">
+                    <input type="hidden" name="memberId" th:value="${checkout.memberId}">
+                    <input type="hidden" name="memberId" th:value="${checkout.bookTitle}">
+                    <input type="hidden" name="bookId" th:value="${checkout.bookId}">
+                    <input type="hidden" name="librarianUsername" th:value="${checkout.librarianUsername}">
+                    <input th:if="${checkout.checkInFormatted == null}" type="submit" value="Checkin"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</th:block>
+
 </body>
 </html>
