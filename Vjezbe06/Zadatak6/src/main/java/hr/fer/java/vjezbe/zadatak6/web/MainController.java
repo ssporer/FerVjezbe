@@ -51,9 +51,18 @@ import java.util.Map;
             return "welcome";
         }
 
-        log.debug("form submit: {}", dto);
+        log.debug("checkin form submit: {}", dto);
         checkoutService.checkout(dto);
         return "redirect:/";
+    }
+    
+    @PostMapping("/checkin") public String checkin(Map<String, Object> model, @Valid CheckoutDto dto, 
+    		Errors errors) {
+    	
+    	log.debug("checkout form submit: {}", dto);
+    	checkoutService.checkIn(dto);
+    	return "redirect:/";
+    	
     }
 
     private void fillModel(Map<String, Object> model) {
