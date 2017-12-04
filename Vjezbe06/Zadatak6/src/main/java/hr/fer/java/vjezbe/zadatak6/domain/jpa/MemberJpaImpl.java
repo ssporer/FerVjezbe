@@ -20,8 +20,7 @@ import java.util.stream.Collectors;
     }
 
     @Override public List<MemberDto> findAll() {
-        return repository.findAll().stream().map(memberEntity -> new MemberDto(memberEntity))
-                .collect(Collectors.toList());
+        return repository.findAll().stream().map(MemberDto::new).collect(Collectors.toList());
     }
 
     @Override public MemberDto findById(Integer id) {

@@ -45,14 +45,14 @@ import java.util.stream.Collectors;
     }
 
     @Override public void checkIn(CheckoutDto dto) {
-        CheckoutEntity checkout = repository.findByPersonByPersonIdIdAndBookByBookIdIdAndCheckinTimeNull(dto.getMemberId(), dto.getBookId());
+        CheckoutEntity checkout = repository
+                .findByPersonByPersonIdIdAndBookByBookIdIdAndCheckinTimeNull(dto.getMemberId(), dto.getBookId());
         checkout.setLibrarianByLibrarianId(librarianRepository.findByUsername(dto.getLibrarianUsername()));
         checkout.setCheckinTime(new Timestamp(new Date().getTime()));
         checkout.setUser(dto.getLibrarianUsername());
     }
 
     @Override public List<CheckoutDto> getAllCheckouts() {
-        return repository.findAll().stream().map(entity -> new CheckoutDto(entity))
-                .collect(Collectors.toList());
+        return repository.findAll().stream().map(CheckoutDto::new).collect(Collectors.toList());
     }
 }

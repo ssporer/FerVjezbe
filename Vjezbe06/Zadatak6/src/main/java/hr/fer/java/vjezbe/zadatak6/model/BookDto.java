@@ -13,7 +13,6 @@ public class BookDto {
     private String title;
 
     public BookDto() {
-
     }
 
     public BookDto(BookEntity bookEntity) {

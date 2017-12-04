@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
-    @Query("select b from BookEntity as b left outer join b.checkouts c where c.checkoutTime is null or c.checkinTime is not null")
+    @Query("select b from BookEntity as b where b.id not in (select book.id from BookEntity as book inner join book.checkouts c where c.checkoutTime is not null and c.checkinTime is null)")
     List<BookEntity> findAllAvailableBooks();
 
-    @Query("select b.title from BookEntity as b left outer join b.checkouts c where c.checkoutTime is null or c.checkinTime is not null group by b.title")
+    @Query("select b.title from BookEntity as b where b.id not in (select book.id from BookEntity as book inner join book.checkouts c where c.checkoutTime is not null and c.checkinTime is null)")
     List<String> findAllAvailableTitles();
 
-    @Query("select b from BookEntity as b left outer join b.checkouts c where b.title = :title and (c.checkoutTime is null or c.checkinTime is not null)")
+    @Query("select b from BookEntity as b where b.title = :title and b.id not in (select book.id from BookEntity as book inner join book.checkouts c where c.checkoutTime is not null and c.checkinTime is null)")
     List<BookEntity> findAvailableByTitle(@Param("title") String title);
 
 }

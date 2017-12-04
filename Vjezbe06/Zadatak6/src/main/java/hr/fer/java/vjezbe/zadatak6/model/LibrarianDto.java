@@ -12,7 +12,8 @@ public class LibrarianDto {
 
     private String lastName;
 
-    public LibrarianDto(){}
+    public LibrarianDto() {
+    }
 
     public LibrarianDto(LibrarianEntity librarianEntity) {
         if (librarianEntity == null)
