@@ -37,14 +37,13 @@ import java.util.Map;
         this.checkoutService = checkoutService;
     }
 
-    @GetMapping({"/", "/checkout"}) public String welcome(Map<String, Object> model) {
+    @GetMapping({"/", "/checkout", "/checkIn"}) public String welcome(Map<String, Object> model) {
         model.put("checkoutDto", new CheckoutDto());
         fillModel(model);
         return "welcome";
     }
 
-    @PostMapping("/checkout") public String checkout(Map<String, Object> model, @Valid CheckoutDto dto,
-            Errors errors) {
+    @PostMapping("/checkout") public String checkout(Map<String, Object> model, @Valid CheckoutDto dto, Errors errors) {
 
         if (errors.hasFieldErrors()) {
             fillModel(model);
@@ -53,6 +52,12 @@ import java.util.Map;
 
         log.debug("form submit: {}", dto);
         checkoutService.checkout(dto);
+        return "redirect:/";
+    }
+
+    @PostMapping("/checkIn") public String checkIn(Map<String, Object> model, CheckoutDto dto) {
+        log.debug("form submit: {}", dto);
+        checkoutService.checkIn(dto);
         return "redirect:/";
     }
 
