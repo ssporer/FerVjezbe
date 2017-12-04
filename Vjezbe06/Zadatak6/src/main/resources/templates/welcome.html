@@ -7,6 +7,8 @@
 
 <body>
 
+<h2 th:text="#{welcome.heading}"></h2>
+
 <form th:action="@{/checkout}" th:object="${checkoutDto}" method="post">
     <table>
         <tr>
