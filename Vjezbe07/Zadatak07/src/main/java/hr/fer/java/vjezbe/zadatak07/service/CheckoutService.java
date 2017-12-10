@@ -3,6 +3,7 @@ package hr.fer.java.vjezbe.zadatak07.service;
 import hr.fer.java.vjezbe.zadatak07.domain.CheckoutDao;
 import hr.fer.java.vjezbe.zadatak07.model.CheckoutDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,5 +26,10 @@ import java.util.List;
 
     public List<CheckoutDto> getAllCheckouts() {
         return checkoutDao.getAllCheckouts();
+    }
+
+    @Secured("ROLE_ADMIN")
+    public void delete(CheckoutDto dto) {
+        checkoutDao.delete(dto);
     }
 }

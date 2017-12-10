@@ -3,13 +3,14 @@
 <head>
     <title>Zadatak 6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}"/>
 </head>
 
 <body>
-
+<div th:replace="index::logout"></div>
 <h2 th:text="#{welcome.heading}"></h2>
 
-<form th:action="@{/checkout}" th:object="${checkoutDto}" method="post">
+<form th:action="@{/library/checkout}" th:object="${checkoutDto}" method="post">
     <table>
         <tr>
             <td><label>Knjiga: </label></td>
@@ -67,17 +68,24 @@
             <td><label th:text="*{librarianName}"></label></td>
             <td><label th:text="*{checkoutFormatted}"></label></td>
             <td><label th:text="*{checkInFormatted}"></label>
-                <form th:action="@{/checkIn}" th:object="${checkoutDto}" method="post">
+                <form th:action="@{/library/checkIn}" th:object="${checkoutDto}" method="post">
                     <input type="hidden" name="memberId" th:value="${checkout.memberId}">
-                    <input type="hidden" name="memberId" th:value="${checkout.bookTitle}">
+                    <input type="hidden" name="bookTitle" th:value="${checkout.bookTitle}">
                     <input type="hidden" name="bookId" th:value="${checkout.bookId}">
                     <input type="hidden" name="librarianUsername" th:value="${checkout.librarianUsername}">
                     <input th:if="${checkout.checkInFormatted == null}" type="submit" value="Checkin"/>
+                </form>
+            </td>
+            <td th:if="${roles.contains('ROLE_ADMIN')}">
+                <form th:action="@{/library/deleteRecord}" th:object="${checkoutDto}" method="post">
+                    <input type="hidden" name="id" th:value="${checkout.id}">
+                    <input type="submit" value="Delete"/>
                 </form>
             </td>
         </tr>
     </table>
 </th:block>
 
+<p><a href="/index" th:href="@{/index}">Back to home page</a></p>
 </body>
 </html>

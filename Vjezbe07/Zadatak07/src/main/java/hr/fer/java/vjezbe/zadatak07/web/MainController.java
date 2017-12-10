@@ -1,71 +1,40 @@
 package hr.fer.java.vjezbe.zadatak07.web;
 
-import hr.fer.java.vjezbe.zadatak07.model.CheckoutDto;
-import hr.fer.java.vjezbe.zadatak07.service.BookService;
-import hr.fer.java.vjezbe.zadatak07.service.CheckoutService;
-import hr.fer.java.vjezbe.zadatak07.service.LibrarianService;
-import hr.fer.java.vjezbe.zadatak07.service.MemberService;
+import hr.fer.java.vjezbe.zadatak07.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.validation.Valid;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller public class MainController {
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
-    private final BookService bookService;
+    @Autowired private UserService userService;
 
-    private final MemberService memberService;
-
-    private final LibrarianService librarianService;
-
-    private final CheckoutService checkoutService;
-
-    @Autowired
-    public MainController(BookService bookService, MemberService memberService, LibrarianService librarianService,
-            CheckoutService checkoutService) {
-        this.bookService = bookService;
-        this.memberService = memberService;
-        this.librarianService = librarianService;
-        this.checkoutService = checkoutService;
+    @RequestMapping("/") public String root() {
+        return "redirect:/index";
     }
 
-    @GetMapping({"/", "/checkout", "/checkIn"}) public String welcome(Map<String, Object> model) {
-        model.put("checkoutDto", new CheckoutDto());
-        fillModel(model);
-        return "welcome";
+    @RequestMapping("/index") public String index(Model model) {
+        User user = userService.getCurrentUser();
+        if (user != null)
+            model.addAttribute(user);
+        return "index";
     }
 
-    @PostMapping("/checkout") public String checkout(Map<String, Object> model, @Valid CheckoutDto dto, Errors errors) {
-
-        if (errors.hasFieldErrors()) {
-            fillModel(model);
-            return "welcome";
-        }
-
-        log.debug("form submit: {}", dto);
-        checkoutService.checkout(dto);
-        return "redirect:/";
+    @RequestMapping("/login") public String login() {
+        return "login";
     }
 
-    @PostMapping("/checkIn") public String checkIn(CheckoutDto dto) {
-        log.debug("form submit: {}", dto);
-        checkoutService.checkIn(dto);
-        return "redirect:/";
-    }
-
-    private void fillModel(Map<String, Object> model) {
-        model.put("titles", bookService.getAllAvailableTitles());
-        model.put("members", memberService.getAllMembers());
-        model.put("librarians", librarianService.getAllLibrarians());
-        model.put("checkouts", checkoutService.getAllCheckouts());
+    @RequestMapping("/login-error") public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login";
     }
 
 }

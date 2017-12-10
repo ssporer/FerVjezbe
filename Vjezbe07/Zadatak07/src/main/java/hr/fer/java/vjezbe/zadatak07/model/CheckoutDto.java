@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 
 public class CheckoutDto {
 
+    private Integer id;
+
     @NotNull @Min(1) private Integer memberId;
 
     private String memberName;
@@ -34,6 +36,8 @@ public class CheckoutDto {
     public CheckoutDto(CheckoutEntity entity) {
         if (entity == null)
             return;
+
+        id = entity.getId();
 
         PersonEntity personEntity = entity.getPersonByPersonId();
         if (personEntity != null) {
@@ -62,6 +66,21 @@ public class CheckoutDto {
 
         if (entity.getCheckinTime() != null)
             checkIn = entity.getCheckinTime().toLocalDateTime();
+    }
+
+    @Override public String toString() {
+        return "CheckoutDto{" + "memberId=" + memberId + ", memberName='" + memberName + '\'' + ", bookTitle='"
+                + bookTitle + '\'' + ", bookId=" + bookId + ", authorName='" + authorName + '\''
+                + ", librarianUsername='" + librarianUsername + '\'' + ", librarianName='" + librarianName + '\''
+                + ", checkout=" + checkout + ", checkIn=" + checkIn + '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getMemberId() {

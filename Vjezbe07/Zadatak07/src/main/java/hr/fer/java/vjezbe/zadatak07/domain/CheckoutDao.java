@@ -12,4 +12,5 @@ public interface CheckoutDao {
 
     List<CheckoutDto> getAllCheckouts();
 
+    void delete(CheckoutDto dto);
 }

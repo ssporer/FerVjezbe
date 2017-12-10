@@ -54,4 +54,10 @@ import java.util.stream.Collectors;
     @Override public List<CheckoutDto> getAllCheckouts() {
         return repository.findAll().stream().map(CheckoutDto::new).collect(Collectors.toList());
     }
+
+    @Override public void delete(CheckoutDto dto) {
+        repository.deleteById(dto.getId());
+    }
+
+
 }

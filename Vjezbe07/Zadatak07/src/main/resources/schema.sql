@@ -54,3 +54,17 @@ CREATE TABLE IF NOT EXISTS LIBRARY.CHECKOUT_HY
   TIME TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ACTION NVARCHAR2
 );
+
+CREATE TABLE IF NOT EXISTS PUBLIC.USERS
+(
+  username varchar_ignorecase(100) not null primary key,
+  password varchar_ignorecase(100) not null,
+  enabled boolean not null
+);
+
+CREATE TABLE IF NOT EXISTS PUBLIC.AUTHORITIES
+(
+  username varchar_ignorecase(50) not null,
+  authority varchar_ignorecase(50) not null,
+  constraint fk_authorities_users foreign key(username) references PUBLIC.USERS(username) ON DELETE CASCADE
+);
