@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}" />
 </head>
 <body>
-<div th:if="${user != null}" th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">
-    <div>USER: <span th:text="${user.username}">username</span></div>
-    <div>ROLES: <span th:each="role, iterStat : ${user.authorities}" th:text="${role} + ' '"></span></div>
+<div th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">
+    Korisnik: <span sec:authentication="name"></span> |
+    Role: <span sec:authentication="principal.authorities"></span>
     <div>
         <form action="#" th:action="@{/logout}" method="post">
             <input type="submit" value="Logout" />

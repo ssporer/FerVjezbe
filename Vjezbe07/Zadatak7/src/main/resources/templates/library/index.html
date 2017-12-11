@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Zadatak 6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -76,7 +76,8 @@
                     <input th:if="${checkout.checkInFormatted == null}" type="submit" value="Checkin"/>
                 </form>
             </td>
-            <td th:if="${roles.contains('ROLE_ADMIN')}">
+            <!--<td th:if="${roles.contains('ROLE_ADMIN')}">-->
+            <td sec:authorize="hasRole('ROLE_ADMIN')">
                 <form th:action="@{/library/deleteRecord}" th:object="${checkoutDto}" method="post">
                     <input type="hidden" name="id" th:value="${checkout.id}">
                     <input type="submit" value="Delete"/>
