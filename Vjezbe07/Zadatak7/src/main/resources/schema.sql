@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS LIBRARY.LIBRARIAN
 (
   ID INTEGER PRIMARY KEY auto_increment,
   USERNAME NVARCHAR2 NOT NULL UNIQUE,
+  PASSWORD VARCHAR_IGNORECASE(100) not null,
   FIRST_NAME NVARCHAR2,
   LAST_NAME NVARCHAR2
 );
@@ -68,3 +69,5 @@ CREATE TABLE IF NOT EXISTS PUBLIC.AUTHORITIES
   authority varchar_ignorecase(50) not null,
   constraint fk_authorities_users foreign key(username) references PUBLIC.USERS(username) ON DELETE CASCADE
 );
+
+

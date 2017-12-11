@@ -7,6 +7,7 @@ import javax.persistence.*;
     private String username;
     private String firstName;
     private String lastName;
+    private String password;
 
     @Id @Column(name = "ID") @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer getId() {
         return id;
@@ -39,6 +40,14 @@ import javax.persistence.*;
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Basic @Column(name = "PASSWORD") public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override public boolean equals(Object o) {

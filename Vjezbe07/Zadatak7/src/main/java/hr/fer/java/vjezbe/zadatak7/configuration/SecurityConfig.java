@@ -16,6 +16,8 @@ import javax.sql.DataSource;
 
     @Qualifier("dataSource") @Autowired private DataSource dataSource;
 
+    @Autowired private CustomAuthProvider cap;
+
     @Override protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests() //
                 .antMatchers("/css/**", "/index").permitAll()//
@@ -25,6 +27,7 @@ import javax.sql.DataSource;
     }
 
     @Autowired public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(new BCryptPasswordEncoder());
+
+        auth.authenticationProvider(cap);
     }
 }
