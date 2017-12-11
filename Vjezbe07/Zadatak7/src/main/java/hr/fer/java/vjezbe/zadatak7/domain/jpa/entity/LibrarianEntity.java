@@ -7,6 +7,7 @@ import javax.persistence.*;
     private String username;
     private String firstName;
     private String lastName;
+    private String password;
 
     @Id @Column(name = "ID") @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer getId() {
         return id;
@@ -23,6 +24,16 @@ import javax.persistence.*;
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Basic
+    @Column(name = "PASSWORD")
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Basic @Column(name = "FIRST_NAME") public String getFirstName() {

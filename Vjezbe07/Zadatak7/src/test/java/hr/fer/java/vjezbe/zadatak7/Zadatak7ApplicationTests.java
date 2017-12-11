@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
     private static final Logger log = LoggerFactory.getLogger(Zadatak7ApplicationTests.class);
 
-    private static final String PASSWORD = "pass";
+    private static final String PASSWORD = "1234";
 
     @Test public void generatePassword() {
         log.debug("***************************************************");
