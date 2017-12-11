@@ -66,7 +66,7 @@ import javax.validation.Valid;
     }
 
     @PostMapping("/library/deleteRecord") public String deleteRecort(CheckoutDto dto) {
-        log.debug("delete form submit: {}", dto);
+        log.debug("delete form submit User:{} - Data : {}", userService.getUsername(), dto);
         checkoutService.delete(dto);
         return "redirect:/library/index";
     }

@@ -18,6 +18,13 @@ import java.util.stream.Collectors;
         return null;
     }
 
+    public String getUsername() {
+        User user = getCurrentUser();
+        if (user != null)
+            return user.getUsername();
+        return null;
+    }
+
     public List<String> getRoles() {
         User user = getCurrentUser();
         if (user != null)
