@@ -7,6 +7,7 @@ import javax.persistence.*;
     private String username;
     private String firstName;
     private String lastName;
+    private UsersEntity usersEntity;
 
     @Id @Column(name = "ID") @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer getId() {
         return id;
@@ -39,6 +40,16 @@ import javax.persistence.*;
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "USERNAME", insertable = false, updatable = false)
+    public UsersEntity getUsersEntity() {
+        return usersEntity;
+    }
+
+    public void setUsersEntity(UsersEntity usersEntity) {
+        this.usersEntity = usersEntity;
     }
 
     @Override public boolean equals(Object o) {
