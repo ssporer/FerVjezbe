@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>hr.fer.java.vjezbe</groupId>
-    <artifactId>zadatak07</artifactId>
+    <artifactId>zadatak7</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>zadatak07</name>
+    <name>zadatak7</name>
     <description>Spring Security - Thymeleaf</description>
 
     <parent>
