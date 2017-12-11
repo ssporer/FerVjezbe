@@ -19,7 +19,7 @@ public class LibrarianDto {
         if (librarianEntity == null)
             return;
         this.id = librarianEntity.getId();
-        this.username = librarianEntity.getUsername();
+        this.username = librarianEntity.getUsersEntity().getUsername();
         this.firstName = librarianEntity.getFirstName();
         this.lastName = librarianEntity.getLastName();
     }
