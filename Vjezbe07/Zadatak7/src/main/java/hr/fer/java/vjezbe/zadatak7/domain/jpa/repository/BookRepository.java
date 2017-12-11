@@ -1,6 +1,6 @@
-package hr.fer.java.vjezbe.zadatak6.domain.jpa.repository;
+package hr.fer.java.vjezbe.zadatak7.domain.jpa.repository;
 
-import hr.fer.java.vjezbe.zadatak6.domain.jpa.entity.BookEntity;
+import hr.fer.java.vjezbe.zadatak7.domain.jpa.entity.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

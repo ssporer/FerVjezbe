@@ -9,4 +9,5 @@ env:
   - BUILD_DIR=Vjezbe03/Zadatak4
   - BUILD_DIR=Vjezbe05/Zadatak5
   - BUILD_DIR=Vjezbe06/Zadatak6
+  - BUILD_DIR=Vjezbe07/Zadatak7
 script: cd $BUILD_DIR && mvn test
