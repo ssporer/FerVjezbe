@@ -42,7 +42,7 @@
             </td>
 
             <!-- knjiznicar je onaj koji je ulogiran -->
-            <td th:if="${roles.contains('ROLE_LIBRARIAN')}">
+            <td th:if="${!roles.contains('ROLE_ADMIN')}">
                 <input type="hidden" name="librarianUsername" th:value="${librarian.username}">
             </td>
 
