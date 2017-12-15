@@ -3,7 +3,7 @@
 <head>
     <title>Zadatak 6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" href="/static/css/main.css" th:href="@{/css/main.css}"/>
 </head>
 
 <body>
@@ -31,13 +31,21 @@
             <td style="color: red" th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}">Član error</td>
         </tr>
         <tr>
-            <td><label>Knjižničar: </label></td>
-            <td>
+
+            <!-- Ako je admin, moze birati knjiznicara -->
+            <td th:if="${roles.contains('ROLE_ADMIN')}"><label>Knjižničar: </label></td>
+            <td th:if="${roles.contains('ROLE_ADMIN')}">
                 <select th:field="${checkoutDto.librarianUsername}" title="Knjižničar">
                     <option th:each="librarian : ${librarians}" th:value="${librarian.username}"
                             th:text="${librarian.fullName}"></option>
                 </select>
             </td>
+
+            <!-- knjiznicar je onaj koji je ulogiran -->
+            <td th:if="${!roles.contains('ROLE_ADMIN')}">
+                <input type="hidden" name="librarianUsername" th:value="${librarian.username}">
+            </td>
+
             <td style="color: red" th:if="${#fields.hasErrors('librarianUsername')}" th:errors="*{librarianUsername}">
                 Knjižničar error
             </td>

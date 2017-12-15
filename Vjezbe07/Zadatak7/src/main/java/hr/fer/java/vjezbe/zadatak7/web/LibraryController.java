@@ -76,6 +76,7 @@ import javax.validation.Valid;
         model.addAttribute("titles", bookService.getAllAvailableTitles());
         model.addAttribute("members", memberService.getAllMembers());
         model.addAttribute("librarians", librarianService.getAllLibrarians());
+        model.addAttribute("librarian", librarianService.getLibrarianByUsername(userService.getUsername()));
         model.addAttribute("checkouts", checkoutService.getAllCheckouts());
     }
 }

@@ -36,4 +36,5 @@ import java.util.stream.Collectors;
     public void authenticateUser(Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
+
 }

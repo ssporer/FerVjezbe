@@ -7,12 +7,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class LibrarianService {
+@Service public class LibrarianService {
 
     @Autowired private LibrarianDao librarianDao;
 
     public List<LibrarianDto> getAllLibrarians() {
         return librarianDao.findAll();
+    }
+
+    public LibrarianDto getLibrarianByUsername(String username) {
+        return librarianDao.findByUsername(username);
     }
 }
