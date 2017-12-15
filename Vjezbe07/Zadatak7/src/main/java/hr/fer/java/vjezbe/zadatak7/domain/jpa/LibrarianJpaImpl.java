@@ -12,6 +12,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,17 +50,20 @@ import java.util.stream.Collectors;
             throw new BadCredentialsException("Username not found.");
         }
 
-        if (!encoder.matches((String)authentication.getCredentials(), librarian.getUsersEntity().getPassword())) {
+        if (!encoder.matches((String) authentication.getCredentials(), librarian.getUsersEntity().getPassword())) {
             log.warn("Wrong password");
             throw new BadCredentialsException("Wrong password.");
         }
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (AuthoritiesEntity authoritiesEntity : librarian.getUsersEntity().getAuthoritiesEntities()) {
-            authorities.add((GrantedAuthority) () -> authoritiesEntity.getAuthority());
-        }
+        List<GrantedAuthority> authorities = librarian.getUsersEntity().getAuthoritiesEntities().stream()
+                .map(authoritiesEntity -> new SimpleGrantedAuthority(authoritiesEntity.getAuthority()))
+                .collect(Collectors.toList());
 
-        return new UsernamePasswordAuthenticationToken(librarian.getUsername(),
-                librarian.getUsersEntity().getPassword(), authorities);
+        User user = new User(authentication.getName(), (String) authentication.getCredentials(), authorities);
+
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(user, authentication.getCredentials(), authorities);
+
+        return token;
     }
 }

@@ -60,6 +60,7 @@
             <th>Knjiznicar</th>
             <th>Posuđeno</th>
             <th>Vračeno</th>
+            <th th:if="${roles.contains('ROLE_ADMIN')}">Obriši</th>
         </tr>
         <tr th:object="${checkout}" th:each="checkout : ${checkouts}">
             <td><label th:text="*{memberName}"></label></td>
@@ -76,7 +77,6 @@
                     <input th:if="${checkout.checkInFormatted == null}" type="submit" value="Checkin"/>
                 </form>
             </td>
-            <!--<td th:if="${roles.contains('ROLE_ADMIN')}">-->
             <td sec:authorize="hasRole('ROLE_ADMIN')">
                 <form th:action="@{/library/deleteRecord}" th:object="${checkoutDto}" method="post">
                     <input type="hidden" name="id" th:value="${checkout.id}">
