@@ -28,7 +28,7 @@ import java.util.List;
         return checkoutDao.getAllCheckouts();
     }
 
-    @Secured("ROLE_ADMIN")
+//    @Secured("ROLE_ADMIN")
     public void delete(CheckoutDto dto) {
         checkoutDao.delete(dto);
     }
