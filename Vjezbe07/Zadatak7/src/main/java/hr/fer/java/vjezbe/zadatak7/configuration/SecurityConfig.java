@@ -20,14 +20,15 @@ import javax.sql.DataSource;
 
     @Override protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests() //
-                .antMatchers("/css/**", "/index").permitAll()//
+                .antMatchers("/css/**", "/index", "/api/**").permitAll()//
                 .antMatchers("/library/**").hasAnyRole("LIBRARIAN", "ADMIN")//
-                .and().formLogin().loginPage("/login")//
-                .failureUrl("/login-error");//
+        //.and().formLogin().loginPage("/login")//
+        //.failureUrl("/login-error")
+        ;//
     }
 
     @Autowired public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(new BCryptPasswordEncoder());
+        //        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(new BCryptPasswordEncoder());
         auth.authenticationProvider(authenticationProvider);
     }
 }
