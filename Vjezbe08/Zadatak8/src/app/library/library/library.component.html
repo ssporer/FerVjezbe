@@ -37,7 +37,7 @@
     </td>
   </tr>
 </table>
-<button type="submit" (click)="submitCheckout()">Ckeckout</button>
+<button mat-fab type="submit" (click)="submitCheckout()">Ckeckout</button>
 
 <div *ngIf="checkouts != null && checkouts.length > 0">
   <table border="1">
@@ -55,8 +55,8 @@
       <td>{{check.authorName}}</td>
       <td>{{check.librarianName}}</td>
       <td>{{check.checkoutFormatted}}</td>
-      <td>{{check.checkInFormatted}} <button *ngIf="check.checkInFormatted == null" (click)="checkIn(check)">Checkin</button></td>
-      <td><button (click)="delete(check)">Delete</button></td>
+      <td>{{check.checkInFormatted}} <button mat-raised-button *ngIf="check.checkInFormatted == null" (click)="checkIn(check)">Checkin</button></td>
+      <td><button mat-raised-button (click)="delete(check)">Delete</button></td>
     </tr>
   </table>
 </div>

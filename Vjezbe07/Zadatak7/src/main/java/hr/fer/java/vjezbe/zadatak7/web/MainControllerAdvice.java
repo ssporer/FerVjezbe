@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
     private static final Logger logger = LoggerFactory.getLogger(MainControllerAdvice.class);
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.OK) @ExceptionHandler(Exception.class)
     public RestDto<Void> handleGenericException(Exception ex) {
         logger.error(ex.getMessage(), ex);
-        return RestDto.fail(ex.getMessage());
+        return RestDto.fail("Greška na serveru: " + ex.getMessage());
     }
 
 }

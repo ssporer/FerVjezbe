@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {RestDto} from "../model/rest-dto";
 import {MemberDto} from "../model/member-dto";
 import {LibrarianDto} from "../model/librarian-dto";
@@ -38,6 +38,8 @@ export class LibraryComponent implements OnInit {
       if (response.success) {
         this.books = response.data;
       }
+    }, error => {
+      this.handleHttpError(error);
     })
   }
 
@@ -46,6 +48,8 @@ export class LibraryComponent implements OnInit {
       if (response.success) {
         this.members = response.data;
       }
+    }, error => {
+      this.handleHttpError(error);
     })
   }
 
@@ -54,6 +58,8 @@ export class LibraryComponent implements OnInit {
       if (response.success) {
         this.librarians = response.data;
       }
+    }, error => {
+      this.handleHttpError(error);
     })
   }
 
@@ -62,31 +68,36 @@ export class LibraryComponent implements OnInit {
       if (response.success) {
         this.checkouts = response.data;
       }
+    }, error => {
+      this.handleHttpError(error);
     })
   }
 
   submitCheckout() {
     if (this.checkout.bookTitle == null) {
-      this.snackBar.open('Odaberi knjigu', 'Ok', {duration: 3000})
+      this.snackBar.open('Odaberi knjigu', 'Ok', {duration: 3000});
       return;
     }
-    if (this.checkout.memberId == null) {
-      this.snackBar.open('Odaberi člana', 'Ok', {duration: 3000})
+    if (this.checkout.memberId == null || this.memberControl.hasError('required')) {
+      this.snackBar.open('Odaberi člana', 'Ok', {duration: 3000});
       return;
     }
-    if (this.checkout.librarianUsername == null){
-      this.snackBar.open('Odaberi knjižničara', 'Ok', {duration: 3000})
+    if (this.checkout.librarianUsername == null || this.librarianControl.hasError('required')) {
+      this.snackBar.open('Odaberi knjižničara', 'Ok', {duration: 3000});
       return;
     }
 
     this.http.post<RestDto<any>>("/api/checkout", this.checkout).subscribe((response: RestDto<any>) => {
       if (response.success) {
+        this.checkout.bookTitle = null;
         this.fetchAllAvailableTitles();
         this.fetchAllCheckouts();
         this.snackBar.open(response.message, 'OK', {duration: 3000});
       } else {
         this.snackBar.open(response.message, 'OK', {duration: 5000});
       }
+    }, error => {
+      this.handleHttpError(error);
     })
   }
 
@@ -94,11 +105,13 @@ export class LibraryComponent implements OnInit {
     this.http.post<RestDto<any>>("/api/checkin", check).subscribe((response: RestDto<any>) => {
       if (response.success) {
         this.fetchAllAvailableTitles();
-        this.fetchAllCheckouts()
+        this.fetchAllCheckouts();
         this.snackBar.open(response.message, 'OK', {duration: 3000});
       } else {
-        this.snackBar.open(response.message, 'OK', {duration: 5000});
+        this.snackBar.open(response.message, 'OK', {duration: 5000, politeness: "assertive"});
       }
+    }, error => {
+      this.handleHttpError(error);
     })
   }
 
@@ -109,8 +122,14 @@ export class LibraryComponent implements OnInit {
         this.fetchAllCheckouts();
         this.snackBar.open(response.message, 'OK', {duration: 3000});
       } else {
-        this.snackBar.open(response.message, 'OK', {duration: 5000});
+        this.snackBar.open(response.message, 'OK', {duration: 5000, politeness: "assertive"});
       }
+    }, error => {
+      this.handleHttpError(error);
     })
+  }
+
+  handleHttpError(err: HttpErrorResponse) {
+    this.snackBar.open(err.error.message, 'OK', {duration: 3000});
   }
 }
