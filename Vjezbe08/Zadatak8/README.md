@@ -1,5 +1,9 @@
 # Zadatak8
 
+Ovaj projekt naslanja se na Spring Boot aplikaciju - zadatak7 i podržava jednake feature kao i njegov GUI u Thymeleaf-u
+
+## Angular CLI
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.2.
 
 ## Development server
