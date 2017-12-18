@@ -72,11 +72,11 @@ import javax.validation.Valid;
     }
 
     private void fillModel(Model model) {
-        model.addAttribute(userService.getCurrentUser());
         model.addAttribute("roles", userService.getRoles());
         model.addAttribute("titles", bookService.getAllAvailableTitles());
         model.addAttribute("members", memberService.getAllMembers());
         model.addAttribute("librarians", librarianService.getAllLibrarians());
+        model.addAttribute("librarian", librarianService.getLibrarianByUsername(userService.getUsername()));
         model.addAttribute("checkouts", checkoutService.getAllCheckouts());
     }
 }

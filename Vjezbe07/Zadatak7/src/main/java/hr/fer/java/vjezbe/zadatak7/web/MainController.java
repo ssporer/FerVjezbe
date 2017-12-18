@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller public class MainController {
 
-    private static final Logger log = LoggerFactory.getLogger(MainController.class);
-
     @Autowired private UserService userService;
 
     @RequestMapping("/") public String root() {

@@ -57,7 +57,7 @@ public class CheckoutDto {
 
         LibrarianEntity librarianEntity = entity.getLibrarianByLibrarianId();
         if (librarianEntity != null) {
-            librarianUsername = librarianEntity.getUsername();
+            librarianUsername = librarianEntity.getUsersEntity().getUsername();
             librarianName = librarianEntity.getFirstName() + " " + librarianEntity.getLastName();
         }
 
