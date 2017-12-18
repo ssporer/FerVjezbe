@@ -5,7 +5,8 @@ import {MemberDto} from "../model/member-dto";
 import {LibrarianDto} from "../model/librarian-dto";
 import {CheckoutDto} from "../model/checkout-dto";
 import {FormControl, Validators} from "@angular/forms";
-import {MatSnackBar} from "@angular/material";
+import {MatSnackBar, MatTableDataSource} from "@angular/material";
+import {DataSource} from "@angular/cdk/collections";
 
 @Component({
   selector: 'app-library',
@@ -22,6 +23,7 @@ export class LibraryComponent implements OnInit {
   knjigaControl = new FormControl('', [Validators.required]);
   memberControl = new FormControl('', [Validators.required]);
   librarianControl = new FormControl('', [Validators.required]);
+  dataSource: DataSource<CheckoutDto>;
 
   constructor(private http: HttpClient, public snackBar: MatSnackBar) {
   }
@@ -67,6 +69,7 @@ export class LibraryComponent implements OnInit {
     this.http.get<RestDto<CheckoutDto[]>>("/api/checkouts").subscribe((response: RestDto<CheckoutDto[]>) => {
       if (response.success) {
         this.checkouts = response.data;
+        this.dataSource = new MatTableDataSource<CheckoutDto>(this.checkouts);
       }
     }, error => {
       this.handleHttpError(error);
@@ -132,4 +135,5 @@ export class LibraryComponent implements OnInit {
   handleHttpError(err: HttpErrorResponse) {
     this.snackBar.open(err.error.message, 'OK', {duration: 3000});
   }
+
 }

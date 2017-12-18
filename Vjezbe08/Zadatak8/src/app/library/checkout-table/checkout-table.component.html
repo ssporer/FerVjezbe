@@ -1,0 +1,37 @@
+<mat-table [dataSource]="dataSource">
+
+  <ng-container matColumnDef="memberName">
+    <mat-header-cell *matHeaderCellDef> Član</mat-header-cell>
+    <mat-cell *matCellDef="let checkoutDto"> {{checkoutDto.memberName}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="bookTitle">
+    <mat-header-cell *matHeaderCellDef> Knjiga</mat-header-cell>
+    <mat-cell *matCellDef="let checkoutDto"> {{checkoutDto.bookTitle}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="authorName">
+    <mat-header-cell *matHeaderCellDef> Autor</mat-header-cell>
+    <mat-cell *matCellDef="let checkoutDto"> {{checkoutDto.authorName}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="librarianName">
+    <mat-header-cell *matHeaderCellDef> Knjiznicar</mat-header-cell>
+    <mat-cell *matCellDef="let checkoutDto"> {{checkoutDto.librarianName}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="checkoutFormatted">
+    <mat-header-cell *matHeaderCellDef> Checkout</mat-header-cell>
+    <mat-cell *matCellDef="let checkoutDto"> {{checkoutDto.checkoutFormatted}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="checkInFormatted">
+    <mat-header-cell *matHeaderCellDef> CheckIn</mat-header-cell>
+    <mat-cell *matCellDef="let checkoutDto"> {{checkoutDto.checkInFormatted}}</mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>
