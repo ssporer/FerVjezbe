@@ -1,0 +1,64 @@
+<table xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.w3.org/1999/xhtml">
+  <tr>
+    <td>
+      <mat-form-field>
+        <mat-select placeholder="Knjiga" [(value)]="checkout.bookTitle" [formControl]="knjigaControl" required>
+          <mat-option *ngFor="let book of books" [value]="book">
+            {{ book }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="knjigaControl.hasError('required')">Odaberite knjigu</mat-error>
+      </mat-form-field>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <mat-form-field>
+        <mat-select placeholder="Član" [(value)]="checkout.memberId" [formControl]="memberControl">
+          <mat-option *ngFor="let member of members" [value]="member.id">
+            {{ member.firstName }} {{ member.lastName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="memberControl.hasError('required')">Odaberite člana</mat-error>
+      </mat-form-field>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <mat-form-field>
+        <mat-select placeholder="Knjižničar" [(value)]="checkout.librarianUsername" [formControl]="librarianControl">
+          <mat-option *ngFor="let librarian of librarians" [value]="librarian.username">
+            {{ librarian.firstName }} {{librarian.lastName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="librarianControl.hasError('required')">Odaberite knjižničara</mat-error>
+      </mat-form-field>
+    </td>
+  </tr>
+</table>
+<button mat-fab type="submit" (click)="submitCheckout()">Ckeckout</button>
+
+<div *ngIf="checkouts != null && checkouts.length > 0">
+  <table border="1">
+    <tr>
+      <th>Član</th>
+      <th>Knjiga</th>
+      <th>Autor</th>
+      <th>Knjiznicar</th>
+      <th>Posuđeno</th>
+      <th>Vračeno</th>
+    </tr>
+    <tr *ngFor="let check of checkouts">
+      <td>{{check.memberName}}</td>
+      <td>{{check.bookTitle}}</td>
+      <td>{{check.authorName}}</td>
+      <td>{{check.librarianName}}</td>
+      <td>{{check.checkoutFormatted}}</td>
+      <td>{{check.checkInFormatted}} <button mat-raised-button *ngIf="check.checkInFormatted == null" (click)="checkIn(check)">Checkin</button></td>
+      <td><button mat-raised-button (click)="delete(check)">Delete</button></td>
+    </tr>
+  </table>
+
+  <app-checkout-table [dataSource]="dataSource"></app-checkout-table>
+</div>
