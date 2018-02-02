@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="201802022211" author="ifarszky">
+        <createTable tableName="image">
+            <column name="id" type="BIGINT" autoIncrement="true" startWith="1">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image" type="LONGBLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="thumbnail" type="LONGBLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resolution" type="VARCHAR(15)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="size" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
