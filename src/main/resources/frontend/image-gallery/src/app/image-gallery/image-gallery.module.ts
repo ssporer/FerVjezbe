@@ -4,17 +4,12 @@ import { CommonModule } from '@angular/common';
 import { ImageCardComponent } from './image-card/image-card.component';
 import { ImageTableComponent } from './image-table/image-table.component'
 
-import { MatButtonModule, MatCardModule, MatIconModule, MatPaginatorModule } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout'
+import { MaterialDesignModule } from './material-design.module'
 
 @NgModule({
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    FlexLayoutModule,
-    MatPaginatorModule
+    MaterialDesignModule
   ],
   declarations: [ImageCardComponent, ImageTableComponent],
   exports: [

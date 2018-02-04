@@ -10,7 +10,7 @@ export class ImageTableComponent implements OnInit {
   imagesDisplayed: string[];
 
   constructor() {
-    this.imagesDisplayed = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+    this.imagesDisplayed = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
   }
 
   ngOnInit() {
