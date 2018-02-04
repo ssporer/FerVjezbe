@@ -1,0 +1,14 @@
+.card-deck-container {
+  width: 75%;
+  max-width: 1000px;
+  position: relative;
+  border-radius: 2px;
+  padding: 10px 10px 30px;
+  margin: 10px 10px 10px 10px;
+  background-color: #ffffff;
+}
+
+.float-right {
+  float: right;
+}
+

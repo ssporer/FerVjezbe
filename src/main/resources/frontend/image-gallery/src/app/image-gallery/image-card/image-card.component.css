@@ -1,5 +1,12 @@
 .image-card {
-  width: 200px;
-  height: 50px;
+  width: 150px;
   text-align: left;
+}
+
+.subtitle-font {
+  font-size: x-small;
+}
+
+.description-font {
+  font-size: x-small;
 }
