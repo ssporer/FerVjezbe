@@ -1,6 +1,7 @@
 package hr.fer.pjava.domain.jpa.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,19 +34,23 @@ public class Image {
     @Column(name = "size")
     private Integer size;
 
+    @Column(name = "upload_date")
+    private Date uploadDate;
+
     @OneToMany(mappedBy = "image", cascade = CascadeType.ALL)
     private List<KeyWords> keyWords;
 
     public Image() {
     }
 
-    public Image(String title, String description, byte[] image, byte[] thumbnail, String resolution, Integer size) {
+    public Image(String title, String description, byte[] image, byte[] thumbnail, String resolution, Integer size, Date uploadDate) {
         this.title = title;
         this.description = description;
         this.image = image;
         this.thumbnail = thumbnail;
         this.resolution = resolution;
         this.size = size;
+        this.uploadDate = uploadDate;
     }
 
     public Image(String title, String description, byte[] image, byte[] thumbnail, String resolution, Integer size,
@@ -105,4 +110,27 @@ public class Image {
         this.keyWords = keyWords;
     }
 
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
+    }
 }

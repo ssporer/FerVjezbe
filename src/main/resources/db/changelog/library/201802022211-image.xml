@@ -32,4 +32,10 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="201802072034" author="ifarszky">
+        <addColumn tableName="image">
+            <column name="upload_date" type="DATE"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

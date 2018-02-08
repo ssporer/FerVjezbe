@@ -68,7 +68,8 @@ public class KeyWordsJpaImpl implements KeyWordsDao {
     public void saveKeyWords(List<KeyWordsDto> keyWordsDto) {
         for (KeyWordsDto kwDto: keyWordsDto) {
             KeyWords kw = new KeyWords();
-            // TODO: kreirat KeyWords od KeyWordsDto - lista kwova
+            kw.setImage(kwDto.getImage());
+            kw.setKeyWord(kwDto.getKeyWord());
             keyWordsRepository.save(kw);
         }
     }

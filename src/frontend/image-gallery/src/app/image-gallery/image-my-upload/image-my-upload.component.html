@@ -1,0 +1,16 @@
+<image-upload
+  [buttonCaption]="'SELECT IMAGE'"
+  [max]="1"
+  [url]="'/api/image-upload'"
+  [extensions]="['jpg','png','gif','svg','bitmap']"
+  [maxFileSize]="1048576"
+  [beforeUpload]="onBeforeUpload"
+  (uploadFinished)="onUploadFinished($event)">
+</image-upload>
+
+<br/>
+<input id="keywords-input" [(ngModel)]="keywords" type="text" placeholder="Key words: kw1 kw2 kw3">
+<br/><br/>
+<input id="title-input" [(ngModel)]="title" type="text" placeholder="Image title">
+<br/><br/>
+<input id="desc-input" [(ngModel)]="desc" type="text" placeholder="Image description">
