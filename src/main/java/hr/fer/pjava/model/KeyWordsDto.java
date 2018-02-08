@@ -14,6 +14,12 @@ public class KeyWordsDto {
     public KeyWordsDto() {
     }
 
+    public KeyWordsDto(Long id, Image image, String keyWord) {
+        this.id = id;
+        this.image = image;
+        this.keyWord = keyWord;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, NgModule } from '@angular/core';
-import { ImageUploadModule, FileHolder, UploadMetadata } from 'angular2-image-upload';
+import { Component, OnInit } from '@angular/core';
+import { FileHolder, UploadMetadata } from 'angular2-image-upload';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {RestDto} from "../model/rest-dto";
 import {UpdateImageDto} from "../model/update-image-dto";
-import {FormControl, Validators} from "@angular/forms";
+import {ImageCardDto} from "../model/image-card-dto";
+import {DataService} from "../data.service";
 
 @Component({
   selector: 'image-my-upload',
@@ -16,47 +17,50 @@ export class ImageMyUploadComponent implements OnInit {
   title: string;
   desc: string;
 
-  private url = "image-url";
-  private goodForUpload: boolean;
+  images: ImageCardDto[];
 
-  constructor(private http: HttpClient) {
+  private url = "image-url";
+
+  constructor(private http: HttpClient, private data: DataService) {
     this.keywords = "";
     this.title = "";
     this.desc = "";
-    this.goodForUpload = true;
   }
 
   ngOnInit() {
+    this.data.images.subscribe(images => this.images = images);
   }
 
   onBeforeUpload = (metadata: UploadMetadata) => {
-
-
-    if (this.keywords.trim().length == 0 || this.title.trim().length == 0 || this.desc.trim().length == 0) {
-      metadata.abort = true;
-      metadata.url = "randomurl";
-      this.goodForUpload = false;
-      alert("You havent insert title, description or keywords for image!");
-    } else {
-      this.goodForUpload = true;
-      metadata.url = this.url;
-    }
-
     return metadata;
-
   };
 
   onUploadFinished(file: FileHolder) {
+    console.log("Upload finished for file: " + file.file.name);
+  }
 
-    let uiDto = new UpdateImageDto();
-    uiDto.filename = file.file.name;
+  saveImage() {
+
+    console.log("Saving image");
+
+    if (this.keywords.trim().length == 0 || this.title.trim().length == 0 || this.desc.trim().length == 0) {
+      alert("You havent entered title, description or key words for the image!");
+    } else {
+      this.postImage();
+    }
+  }
+
+  postImage() {
+    var uiDto = new UpdateImageDto();
     uiDto.title = this.title;
     uiDto.desc = this.desc;
     uiDto.keywords = this.keywords;
 
-    this.http.post<RestDto<any>>("/api/image-upload-update", uiDto).subscribe((response: RestDto<any>) => {
+    this.http.post<RestDto<any>>("/api/image-upload-submit", uiDto).subscribe((response: RestDto<any>) => {
         if (response.success) {
           console.log("success on updating image data");
+          this.title = ""; this.desc = ""; this.keywords = "";
+          this.fetchAllImages();
         } else {
           console.log("failed to update image data");
         }
@@ -65,10 +69,19 @@ export class ImageMyUploadComponent implements OnInit {
       }
     )
 
-    this.title = "";
-    this.desc = "";
-    this.keywords = "";
 
+  }
+
+  fetchAllImages() {
+    var local_images : ImageCardDto[] = [];
+    this.http.get<RestDto<ImageCardDto[]>>("/api/all-images").subscribe((response: RestDto<ImageCardDto[]>) => {
+      if (response.success) {
+        local_images = response.data;
+        this.data.changeImages(local_images);
+      }
+    }, error => {
+      this.handleHttpError(error);
+    })
   }
 
   handleHttpError(err: HttpErrorResponse) {

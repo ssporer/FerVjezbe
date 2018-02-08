@@ -14,4 +14,7 @@ public interface KeyWordsRepository extends JpaRepository<KeyWords, Long> {
     @Query("SELECT kw FROM KeyWords kw WHERE kw.image.id = ?1")
     List<KeyWords> findByImageId(Long imageId);
 
+    @Query("SELECT kw FROM KeyWords kw WHERE upper(kw.keyWord) like concat('%', upper(?1), '%') ")
+    List<KeyWords> findByKeyword(String keyword);
+
 }

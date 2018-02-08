@@ -14,3 +14,7 @@
 <input id="title-input" [(ngModel)]="title" type="text" placeholder="Image title">
 <br/><br/>
 <input id="desc-input" [(ngModel)]="desc" type="text" placeholder="Image description">
+<br/><br/>
+<div ng-controller="ImageMyUploadComponent">
+  <button mat-raised-button color="accent" class="btn-primary" (click)="saveImage()">UPLOAD</button>
+</div>

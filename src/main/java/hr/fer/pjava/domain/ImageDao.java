@@ -1,9 +1,9 @@
 package hr.fer.pjava.domain;
 
 import hr.fer.pjava.domain.jpa.entity.Image;
+import hr.fer.pjava.model.ImageCardsDto;
 import hr.fer.pjava.model.ImageDto;
 import hr.fer.pjava.model.KeyWordsDto;
-import hr.fer.pjava.model.UpdateImageDto;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ImageDao {
 
-    List<ImageDto> getAllImages();
+    List<ImageCardsDto> getAllImages();
 
     List<ImageDto> getImageById(Long id); // dohvat slike po idu slike
 
@@ -24,8 +24,8 @@ public interface ImageDao {
 
     List<ImageDto> getImagesByKeyWords(List<String> keyWords); // dohvat slika sa svim kljucnim rijecima
 
-    void saveImage(ImageDto imageDto); // spremi sliku
+    Image saveImage(ImageDto imageDto); // spremi sliku
 
-    Image updateImage(UpdateImageDto imageDto); // azuriraj zadnju uploadanu sliku jer kasnim sa naslovom i opisom
+    Image updateImage(ImageDto imageDto, Long updateImageId); // azuriraj zadnju uploadanu sliku jer kasnim sa naslovom i opisom
 
 }

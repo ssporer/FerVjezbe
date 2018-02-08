@@ -62,6 +62,15 @@ public class Image {
         this.keyWords = keyWords;
     }
 
+    public String getKeywordsAsString() {
+        String keywords = "";
+        for (KeyWords kw : this.keyWords) {
+            keywords += "#" + kw.getKeyWord() + " ";
+        }
+
+        return keywords;
+    }
+
     public Long getId() {
         return id;
     }

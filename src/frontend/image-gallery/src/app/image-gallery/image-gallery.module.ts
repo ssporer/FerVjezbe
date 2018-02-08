@@ -9,6 +9,8 @@ import { ImageTableComponent } from './image-table/image-table.component';
 import { ImageSearchComponent } from './image-search/image-search.component';
 import { ImageMyUploadComponent } from './image-my-upload/image-my-upload.component';
 
+import { DataService } from './data.service'
+
 import { MaterialDesignModule } from './material-design.module'
 
 @NgModule({
@@ -20,6 +22,7 @@ import { MaterialDesignModule } from './material-design.module'
     HttpClientModule,
     ReactiveFormsModule
   ],
+  providers: [DataService],
   declarations: [ImageCardComponent, ImageTableComponent, ImageSearchComponent, ImageMyUploadComponent],
   exports: [
     ImageCardComponent, ImageTableComponent, ImageSearchComponent, ImageMyUploadComponent

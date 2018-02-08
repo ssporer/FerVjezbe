@@ -3,9 +3,12 @@ package hr.fer.pjava.service;
 import hr.fer.pjava.domain.ImageDao;
 import hr.fer.pjava.domain.KeyWordsDao;
 import hr.fer.pjava.domain.jpa.entity.Image;
+import hr.fer.pjava.domain.jpa.entity.KeyWords;
+import hr.fer.pjava.model.ImageCardsDto;
 import hr.fer.pjava.model.ImageDto;
 import hr.fer.pjava.model.KeyWordsDto;
 import hr.fer.pjava.model.UpdateImageDto;
+import hr.fer.pjava.service.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Igor Farszky on 23.1.2018..
@@ -34,47 +38,49 @@ public class ImageService {
         this.keyWordsDao = keyWordsDao;
     }
 
-    public void saveImage(MultipartFile file) {
+    public void saveImage(ImageDto imageDto, String keywords) {
 
-        ImageDto imageDto = new ImageDto();
-
-        imageDto.setTitle(file.getOriginalFilename());
-        imageDto.setDesc(file.getOriginalFilename());
-        try {
-            imageDto.setImage(file.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (imageDto.getImage() == null) {
+            return;
         }
 
-        ByteArrayInputStream bis = null;
-        byte[] resThumb = null;
+        byte[] resThumb = imageDto.getImage();
         try {
-
-            resThumb = file.getBytes();
-            bis = new ByteArrayInputStream(file.getBytes());
-            BufferedImage bufferedImage = ImageIO.read(bis);
-            bufferedImage = getScaledInstance(bufferedImage, 256, 256, RenderingHints.VALUE_INTERPOLATION_BICUBIC, true);
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write( bufferedImage, "png", baos );
-            baos.flush();
-            resThumb = baos.toByteArray();
-            baos.close();
-
+            resThumb = Utils.getScaledInstance(resThumb, 256, 256, RenderingHints.VALUE_INTERPOLATION_BICUBIC, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         imageDto.setThumbnail(resThumb);
         imageDto.setResolution("");
-        imageDto.setSize(Long.valueOf(file.getSize()).intValue());
 
-        imageDao.saveImage(imageDto);
+        Image image = imageDao.saveImage(imageDto);
+
+        String[] keyWordsSplit = keywords.trim().split(" ");
+
+        List<KeyWordsDto> keyWordsDtoList = new ArrayList<>();
+        for (String s : keyWordsSplit) {
+            KeyWordsDto kwDto = new KeyWordsDto();
+            kwDto.setImage(image);
+            kwDto.setKeyWord(s);
+            keyWordsDtoList.add(kwDto);
+        }
+
+        keyWordsDao.saveKeyWords(keyWordsDtoList);
 
     }
 
+    public List<ImageCardsDto> getAllImages() {
+        return imageDao.getAllImages();
+    }
+
     public void updateImage(UpdateImageDto updateImageDto) {
-        Image updatedImage = imageDao.updateImage(updateImageDto);
+
+        ImageDto imageDto = new ImageDto();
+        imageDto.setTitle(updateImageDto.getTitle());
+        imageDto.setDesc(updateImageDto.getDesc());
+
+        Image updatedImage = imageDao.updateImage(imageDto, 1L);
         String[] keyWordsSplit = updateImageDto.getKeywords().trim().split(" ");
 
         List<KeyWordsDto> keyWordsDtoList = new ArrayList<>();
@@ -88,54 +94,10 @@ public class ImageService {
         keyWordsDao.saveKeyWords(keyWordsDtoList);
     }
 
-    private static BufferedImage getScaledInstance(BufferedImage img, int targetWidth, int targetHeight, Object hint,
-                                                   boolean higherQuality) {
-
-        int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB
-                : BufferedImage.TYPE_INT_ARGB;
-        BufferedImage ret = (BufferedImage) img;
-        if (ret.getHeight() < targetHeight || ret.getWidth() < targetWidth) {
-            higherQuality = false;
-        }
-        int w, h;
-        if (higherQuality) {
-            // Use multi-step technique: start with original size, then
-            // scale down in multiple passes with drawImage()
-            // until the target size is reached
-            w = img.getWidth();
-            h = img.getHeight();
-        } else {
-            // Use one-step technique: scale directly from original
-            // size to target size with a single drawImage() call
-            w = targetWidth;
-            h = targetHeight;
-        }
-
-        do {
-            if (higherQuality && w > targetWidth) {
-                w /= 2;
-                if (w < targetWidth) {
-                    w = targetWidth;
-                }
-            }
-
-            if (higherQuality && h > targetHeight) {
-                h /= 2;
-                if (h < targetHeight) {
-                    h = targetHeight;
-                }
-            }
-
-            BufferedImage tmp = new BufferedImage(w, h, type);
-            Graphics2D g2 = tmp.createGraphics();
-            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
-            g2.drawImage(ret, 0, 0, w, h, null);
-            g2.dispose();
-
-            ret = tmp;
-        } while (w != targetWidth || h != targetHeight);
-
-        return ret;
+    public List<ImageCardsDto> getImagesByKeyword(String keyword) {
+        return keyWordsDao.getKeyWordsByWord(keyword).stream()
+                .map(k -> new ImageCardsDto(k.getImage()))
+                .collect(Collectors.toList());
     }
 
 }

@@ -3,15 +3,17 @@ package hr.fer.pjava.domain.jpa;
 import hr.fer.pjava.domain.ImageDao;
 import hr.fer.pjava.domain.jpa.entity.Image;
 import hr.fer.pjava.domain.jpa.repository.ImageRepository;
+import hr.fer.pjava.model.ImageCardsDto;
 import hr.fer.pjava.model.ImageDto;
 import hr.fer.pjava.model.KeyWordsDto;
-import hr.fer.pjava.model.UpdateImageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Igor Farszky on 23.1.2018..
@@ -28,8 +30,11 @@ public class ImageJpaImpl implements ImageDao {
     }
 
     @Override
-    public List<ImageDto> getAllImages() {
-        return null;
+    public List<ImageCardsDto> getAllImages() {
+        return imageRepository.findAll().stream().map(i -> new ImageCardsDto(i.getTitle(), i.getDescription(),
+                i.getKeywordsAsString(),
+                Base64.getEncoder().encodeToString(i.getThumbnail())
+        )).collect(Collectors.toList());
     }
 
     @Override
@@ -58,21 +63,26 @@ public class ImageJpaImpl implements ImageDao {
     }
 
     @Override
-    public void saveImage(ImageDto imageDto) {
+    public Image saveImage(ImageDto imageDto) {
         Image image = new Image(imageDto.getTitle(), imageDto.getDesc(), imageDto.getImage(),
                 imageDto.getThumbnail(), imageDto.getResolution(), imageDto.getSize(), new Date());
         imageRepository.save(image);
+
+        return image;
     }
 
     @Override
-    public Image updateImage(UpdateImageDto imageDto) {
+    public Image updateImage(ImageDto imageDto, Long updateImageId) {
 
-        Image image = imageRepository.findLastByTitle(imageDto.getFilename());
-        if (image == null) {
-            return null;
-        }
+        Image image = imageRepository.findOne(updateImageId);
+
         image.setTitle(imageDto.getTitle());
         image.setDescription(imageDto.getDesc());
+        image.setImage(imageDto.getImage());
+        image.setImage(imageDto.getThumbnail());
+        image.setResolution(imageDto.getResolution());
+        image.setSize(image.getSize());
+        image.setUploadDate(new Date());
 
         imageRepository.save(image);
 

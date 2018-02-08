@@ -1,31 +1,24 @@
 package hr.fer.pjava.model;
 
-/**
- * Created by Igor Farszky on 7.2.2018..
- */
-public class UpdateImageDto {
 
-    private String filename;
-    private String title;
-    private String desc;
-    private String keywords;
+import java.io.Serializable;
+
+/**
+ * Created by Igor Farszky on 8.2.2018..
+ */
+public class UpdateImageDto implements Serializable {
+
+    public String title;
+    public String desc;
+    public String keywords;
 
     public UpdateImageDto() {
     }
 
-    public UpdateImageDto(String filename, String title, String desc, String keywords) {
-        this.filename = filename;
+    public UpdateImageDto(String title, String desc, String keywords) {
         this.title = title;
         this.desc = desc;
         this.keywords = keywords;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
     }
 
     public String getTitle() {

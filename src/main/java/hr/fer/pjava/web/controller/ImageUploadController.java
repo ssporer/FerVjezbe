@@ -1,10 +1,14 @@
 package hr.fer.pjava.web.controller;
 
+import hr.fer.pjava.model.ImageCardsDto;
+import hr.fer.pjava.model.ImageDto;
+import hr.fer.pjava.model.RestDto;
 import hr.fer.pjava.model.UpdateImageDto;
 import hr.fer.pjava.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +16,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +28,7 @@ import java.util.Map;
 public class ImageUploadController {
 
     private final ImageService imageService;
+    private ImageDto imageDto = new ImageDto();
 
     @Autowired
     public ImageUploadController(ImageService imageService) {
@@ -30,27 +38,32 @@ public class ImageUploadController {
     @PostMapping("/image-upload")
     public String handleFileUpload(HttpServletRequest request) {
 
-        System.out.println("isus");
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> yourFiles = multipartRequest.getFileMap();
 
         for (Map.Entry<String, MultipartFile> entry: yourFiles.entrySet()) {
-            imageService.saveImage(entry.getValue());
+            try {
+                imageDto.setImage(entry.getValue().getBytes());
+                imageDto.setSize(Long.valueOf(entry.getValue().getSize()).intValue());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-//        redirectAttributes.addFlashAttribute("message",
-//                "You successfully uploaded " + file.getOriginalFilename() + "!");
 
         return "redirect:/";
     }
 
-    // Because first time i just upload an image, without titles, desc, keywords, cuz i dont know to do that
-    // then need to make post again to manage update those things
-    @PostMapping("/image-upload-update")
-    public String handleUpdatedFileUpload(UpdateImageDto updateImageDto) {
-        imageService.updateImage(updateImageDto);
+    @PostMapping("/image-upload-submit")
+    public RestDto<Void> handleUpdatedFileUpload(@RequestBody @Valid UpdateImageDto updateImageDto) {
 
-        return "redirect:/";
+        imageDto.setTitle(updateImageDto.getTitle());
+        imageDto.setDesc(updateImageDto.getDesc());
+
+        imageService.saveImage(imageDto, updateImageDto.getKeywords());
+
+        imageDto = new ImageDto();
+
+        return RestDto.success("Image successfully saved");
     }
 
 }

@@ -1,14 +1,12 @@
 <fieldset>
 
-  <form layout layout-align="center" layout-padding>
     <div layout="row" flex>
-        <input type="text" placeholder="Key word">
+        <input type="text" placeholder="Key word" [(ngModel)]="keywords">
       <div>
-        <button mat-button class="btn-default">
+        <button mat-raised-button class="btn-default" (click)="searchImages()">
           <mat-icon class="material-icons">search</mat-icon>
         </button>
       </div>
     </div>
-  </form>
 
 </fieldset>

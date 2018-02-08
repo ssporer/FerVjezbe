@@ -1,11 +1,11 @@
 <div fxLayout="row" fxFlex.md="70" fxLayoutWrap class="card-deck-container mat-elevation-z4">
 
-  <div fxFlex *ngFor="let product of imagesDisplayed" class="card-item">
-    <image-card></image-card>
-  </div>
-
-  <div class="paginator mat-elevation-z4" *ngIf="imagesDisplayed.length !== 0">
-    <mat-paginator [length]="200" [pageSize]="20" [pageSizeOptions]="[4, 10]"></mat-paginator>
+  <div fxFlex *ngFor="let image of images" class="card-item">
+    <image-card [image]="image"></image-card>
   </div>
 
 </div>
+
+<!--<div class="paginator mat-elevation-z4" *ngIf="imagesDisplayed.length !== 0">-->
+  <!--<mat-paginator [length]="200" [pageSize]="20" [pageSizeOptions]="[4, 10]"></mat-paginator>-->
+<!--</div>-->

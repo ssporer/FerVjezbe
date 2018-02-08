@@ -10,6 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -45,7 +49,15 @@ public class KeyWordsJpaImpl implements KeyWordsDao {
 
     @Override
     public List<KeyWordsDto> getKeyWordsByWord(String keyWord) {
-        return null;
+        return keyWordsRepository.findByKeyword(keyWord).stream()
+                .filter(distinctByKey(KeyWords::getImage))
+                .map(k -> new KeyWordsDto(k.getId(), k.getImage(), k.getKeyWord()))
+                .collect(Collectors.toList());
+    }
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 
     @Override
