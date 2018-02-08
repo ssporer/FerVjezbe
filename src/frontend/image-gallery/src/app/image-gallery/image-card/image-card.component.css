@@ -10,3 +10,7 @@
 .description-font {
   font-size: x-small;
 }
+
+.pointer {
+  cursor: pointer;
+}

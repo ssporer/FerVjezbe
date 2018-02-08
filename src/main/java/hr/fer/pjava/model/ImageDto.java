@@ -5,6 +5,7 @@ package hr.fer.pjava.model;
  */
 public class ImageDto {
 
+    private Long id;
     private String title;
     private String desc;
     private byte[] image;
@@ -15,13 +16,21 @@ public class ImageDto {
     public ImageDto() {
     }
 
-    public ImageDto(String title, String desc, byte[] image, byte[] thumbnail, String resolution, Integer size) {
+    public ImageDto(Long id, String title, String desc, byte[] image, byte[] thumbnail, String resolution, Integer size) {
         this.title = title;
         this.desc = desc;
         this.image = image;
         this.thumbnail = thumbnail;
         this.resolution = resolution;
         this.size = size;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

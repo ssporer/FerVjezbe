@@ -22,4 +22,9 @@ export class ImageCardComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + this.image.thumbnail);
   }
 
+  openImage() {
+    console.log("open image number: " + this.image.id);
+
+  }
+
 }

@@ -10,26 +10,39 @@ import java.util.Base64;
  */
 public class ImageCardsDto implements Serializable {
 
+    private Long id;
     private String title;
     private String desc;
     private String keywords;
     private String thumbnail;
+    private String image;
 
     public ImageCardsDto() {
     }
 
-    public ImageCardsDto(String title, String desc, String keywords, String  thumbnail) {
+    public ImageCardsDto(Long id, String title, String desc, String keywords, String  thumbnail, String image) {
         this.title = title;
         this.desc = desc;
         this.keywords = keywords;
         this.thumbnail = thumbnail;
+        this.image = image;
     }
 
     public ImageCardsDto(Image image) {
+        this.id = image.getId();
         this.title = image.getTitle();
         this.desc = image.getDescription();
         this.keywords = image.getKeywordsAsString();
         this.thumbnail = Base64.getEncoder().encodeToString(image.getThumbnail());
+        this.image = Base64.getEncoder().encodeToString(image.getImage());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -62,5 +75,13 @@ public class ImageCardsDto implements Serializable {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

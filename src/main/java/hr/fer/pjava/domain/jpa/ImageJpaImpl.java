@@ -31,9 +31,9 @@ public class ImageJpaImpl implements ImageDao {
 
     @Override
     public List<ImageCardsDto> getAllImages() {
-        return imageRepository.findAll().stream().map(i -> new ImageCardsDto(i.getTitle(), i.getDescription(),
+        return imageRepository.findAll().stream().map(i -> new ImageCardsDto(i.getId(), i.getTitle(), i.getDescription(),
                 i.getKeywordsAsString(),
-                Base64.getEncoder().encodeToString(i.getThumbnail())
+                Base64.getEncoder().encodeToString(i.getThumbnail()), Base64.getEncoder().encodeToString(i.getImage())
         )).collect(Collectors.toList());
     }
 

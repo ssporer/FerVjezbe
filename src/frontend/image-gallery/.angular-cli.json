@@ -19,11 +19,13 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "../src/app/image-gallery/bower_components/lightbox2/dist/css/lightbox.min.css"
       ],
       "scripts": [
         "../node_modules/ui-select/dist/select.js",
-        "../node_modules/jquery/dist/jquery.min.js"
+        "../src/app/image-gallery/bower_components/jquery/dist/jquery.min.js",
+        "../src/app/image-gallery/bower_components/lightbox2/dist/js/lightbox-plus-jquery.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

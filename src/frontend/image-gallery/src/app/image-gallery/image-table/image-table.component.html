@@ -1,7 +1,12 @@
+<modal-gallery [modalImages]="testImages"
+               [downloadable]="true"
+               [enableCloseOutside]="true">
+</modal-gallery>
+
 <div fxLayout="row" fxFlex.md="70" fxLayoutWrap class="card-deck-container mat-elevation-z4">
 
   <div fxFlex *ngFor="let image of images" class="card-item">
-    <image-card [image]="image"></image-card>
+    <image-card [image]="image" (click)="openImage(image.id, images)" class="pointer"></image-card>
   </div>
 
 </div>
